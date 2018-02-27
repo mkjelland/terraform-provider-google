@@ -591,9 +591,13 @@ func resourceComputeInstanceTemplateCreate(d *schema.ResourceData, meta interfac
 	instanceProperties.GuestAccelerators = expandInstanceTemplateGuestAccelerators(d, config)
 
 	instanceProperties.Tags = resourceInstanceTags(d)
+
 	if _, ok := d.GetOk("labels"); ok {
 		instanceProperties.Labels = expandLabels(d)
+	} else {
+		instanceProperties.Labels = map[string]string{}
 	}
+	instanceProperties.Labels["partner-creation-tool"] = "terraform"
 
 	var itName string
 	if v, ok := d.GetOk("name"); ok {
