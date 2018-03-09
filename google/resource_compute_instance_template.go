@@ -597,7 +597,7 @@ func resourceComputeInstanceTemplateCreate(d *schema.ResourceData, meta interfac
 	} else {
 		instanceProperties.Labels = map[string]string{}
 	}
-	instanceProperties.Labels["partner-creation-tool"] = "terraform"
+	instanceProperties.Labels["goog-partner-creation-tool"] = "terraform"
 
 	var itName string
 	if v, ok := d.GetOk("name"); ok {

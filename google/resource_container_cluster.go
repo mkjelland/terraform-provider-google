@@ -406,7 +406,7 @@ func resourceContainerClusterCreate(d *schema.ResourceData, meta interface{}) er
 	}
 
 	cluster.ResourceLabels = map[string]string{
-		"partner-creation-tool": "terraform",
+		"goog-partner-creation-tool": "terraform",
 	}
 
 	timeoutInMinutes := int(d.Timeout(schema.TimeoutCreate).Minutes())
