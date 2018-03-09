@@ -718,8 +718,12 @@ func resourceComputeInstanceTemplateRead(d *schema.ResourceData, meta interface{
 			return fmt.Errorf("Error setting tags_fingerprint: %s", err)
 		}
 	}
+	labels := instanceTemplate.Properties.Labels
+	if _, ok := labels["goog-partner-creation-tool"]; ok {
+		delete(labels, "goog-partner-creation-tool")
+	}
 	if instanceTemplate.Properties.Labels != nil {
-		d.Set("labels", instanceTemplate.Properties.Labels)
+		d.Set("labels", labels)
 	}
 	if err = d.Set("self_link", instanceTemplate.SelfLink); err != nil {
 		return fmt.Errorf("Error setting self_link: %s", err)
