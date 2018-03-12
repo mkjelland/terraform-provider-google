@@ -873,12 +873,18 @@ func testAccCheckContainerCluster(n string) resource.TestCheckFunc {
 			}
 		}
 
+		// Check for the tracking resource label
+		gcp, ok := cluster.ResourceLabels["goog-partner-creation-tool"]
+		if !ok || gcp != "terraform" {
+			return fmt.Errorf(matchError("resource_label", "terraform", gcp))
+		}
+
 		// Network has to be done separately in order to normalize the two values
 		tf, err := getNetworkNameFromSelfLink(attributes["network"])
 		if err != nil {
 			return err
 		}
-		gcp, err := getNetworkNameFromSelfLink(cluster.Network)
+		gcp, err = getNetworkNameFromSelfLink(cluster.Network)
 		if err != nil {
 			return err
 		}
